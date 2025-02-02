@@ -9,9 +9,20 @@ async function bootstrap() {
   app.use(helmet());
   const config = new DocumentBuilder()
     .setTitle('Crypto Alert System API')
-    .setDescription('You can create users, alerts and get notifications with this API.')
+    .setDescription(
+      'You can create users, alerts and get notifications with this API.',
+    )
     .setVersion('1.0')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      in: 'header',
+      name: 'Authorization',
+      description: 'Enter your Bearer token',
+    })
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

@@ -16,6 +16,7 @@ export class CryptoPriceTaskService {
   @Cron(CronExpression.EVERY_10_SECONDS)
   async handleFluctiations() {
     const cryptoWithPrices: Record<string, any> = await this.cryptoService.getPrices();
+    console.log(new Date().toLocaleString());
 
     const fluctiations = await Promise.all(cryptoWithPrices.map(crypto => this.handleFluctiationAndEmit(crypto)));
 
@@ -37,7 +38,7 @@ export class CryptoPriceTaskService {
   }
 
   async handleFluctiationAndEmit(crypto) {
-    console.log(crypto._id, crypto.name, crypto.price);
+    console.log(crypto.name, crypto.price);
     const query = this.alertsService.getActiveAlertsLessThan(crypto.price, crypto._id);
     const query2 = this.alertsService.getActiveAlertsGreaterThan(crypto.price, crypto._id);
 

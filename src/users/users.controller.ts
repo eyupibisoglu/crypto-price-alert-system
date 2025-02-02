@@ -15,7 +15,6 @@ export class UsersController {
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({ status: 201, type: CreatedUserDto })
   @ApiBody({ type: CreateUserDto })
-  @ApiBearerAuth()
   @Post()
   async create(@Body(HashPasswordPipe) createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto);

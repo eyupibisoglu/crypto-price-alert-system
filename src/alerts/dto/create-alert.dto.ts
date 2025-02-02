@@ -5,6 +5,14 @@ import { IsEnum, IsNotEmpty, IsBoolean, IsMongoId, IsOptional } from 'class-vali
 
 export class CreateAlertDto {
   @ApiProperty({
+    description: 'Id of the user who set the alert.',
+    example: '6785215f2865d92b37493382',
+  })
+  @IsOptional()
+  @IsMongoId({ message: 'User ID must be a valid MongoDB ObjectId' })
+  user?: Types.ObjectId;
+
+  @ApiProperty({
     description: 'Id of the cryptocurrency for which the alert is set.',
     example: '6785215f2865d92b37493382',
   })

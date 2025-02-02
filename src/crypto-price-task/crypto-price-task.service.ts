@@ -39,10 +39,10 @@ export class CryptoPriceTaskService {
 
   async handleFluctiationAndEmit(crypto) {
     console.log(crypto.name, crypto.price);
-    const query = this.alertsService.getActiveAlertsLessThan(crypto.price, crypto._id);
-    const query2 = this.alertsService.getActiveAlertsGreaterThan(crypto.price, crypto._id);
+    const lessThanAlerts = this.alertsService.getActiveAlertsLessThan(crypto.price, crypto._id);
+    const greaterThanAlerts = this.alertsService.getActiveAlertsGreaterThan(crypto.price, crypto._id);
 
-    const results = await Promise.all([query, query2]);
+    const results = await Promise.all([lessThanAlerts, greaterThanAlerts]);
 
     results.flat().forEach((alert) => {
       this.eventEmitter.emit('crypto.price.updated', new CryptoPriceUpdatedEvent( crypto, alert));
